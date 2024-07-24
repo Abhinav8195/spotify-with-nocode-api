@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const fetchAlbumsData = async () => {
       try {
-        const response = await fetch(`https://v1.nocodeapi.com/abhinav/spotify/PvGApxfVhJVEkKXq/search?q=${encodeURIComponent(q)}&type=album`);
+        const response = await fetch(`https://v1.nocodeapi.com/abhinav/spotify/PvGApxfVhJVEkKXq/recentlyPlayed`);
         const data = await response.json();
         console.log('Albums API Response:', data);
         if (data.albums && data.albums.items) {
