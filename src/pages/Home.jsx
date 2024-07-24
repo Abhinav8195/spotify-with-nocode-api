@@ -16,9 +16,9 @@ const Home = () => {
   useEffect(() => {
     const fetchAlbumsData = async () => {
       try {
-        const response = await fetch(`https://v1.nocodeapi.com/abhinav/spotify/PvGApxfVhJVEkKXq/recentlyPlayed`);
+        const response = await fetch(`https://v1.nocodeapi.com/abhinav/spotify/PvGApxfVhJVEkKXq/browse/featured`);
         const data = await response.json();
-        console.log('Albums API Response:', data);
+        console.log('Home Albums Data:', data); // Log home albums data
         if (data.albums && data.albums.items) {
           setAlbumsData(data.albums.items);
         } else {
@@ -33,7 +33,7 @@ const Home = () => {
       try {
         const response = await fetch(`https://v1.nocodeapi.com/abhinav/spotify/PvGApxfVhJVEkKXq/search?q=${encodeURIComponent(q)}&type=track`);
         const data = await response.json();
-        console.log('Tracks API Response:', data);
+        console.log('Search Tracks Data:', data); // Log search tracks data
         if (data.tracks && data.tracks.items) {
           setTracksData(data.tracks.items);
         } else {
@@ -56,10 +56,35 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <DisplayCard title={`Special for ${user?.displayName || 'you'}`} albums={albumsData} tracks={tracksData} onPlay={handlePlayTrack} />
-      <DisplayCard title={'Popular albums'} albums={albumsData} tracks={tracksData} onPlay={handlePlayTrack} />
-      <DisplayCard title={'Big Hits'} albums={albumsData} tracks={tracksData} onPlay={handlePlayTrack} />
-      <Seekbar track={currentTrack} isPlaying={isPlaying} onPlayPause={() => setIsPlaying(!isPlaying)} />
+      <DisplayCard 
+        title={`Special for ${user?.displayName || 'you'}`} 
+        albums={tracksData} 
+        type="albums"
+        onPlay={handlePlayTrack} 
+      />
+      {/* <DisplayCard 
+        title={'Popular albums'} 
+        albums={albumsData} 
+        type="albums"
+        onPlay={handlePlayTrack} 
+      />
+      <DisplayCard 
+        title={'Big Hits'} 
+        albums={albumsData} 
+        type="albums"
+        onPlay={handlePlayTrack} 
+      />
+      <DisplayCard 
+        title={`Search Results for "${q}"`} 
+        tracks={tracksData} 
+        type="tracks"
+        onPlay={handlePlayTrack} 
+      /> */}
+      <Seekbar 
+        track={currentTrack} 
+        isPlaying={isPlaying} 
+        onPlayPause={() => setIsPlaying(!isPlaying)} 
+      />
     </>
   );
 };
