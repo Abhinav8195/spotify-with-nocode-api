@@ -1,7 +1,9 @@
 import React from 'react';
 
 const DisplayCard = ({ title, albums, tracks, onPlay }) => {
+  // Determine which data to display: playlists or tracks
   const items = albums || tracks;
+  const isTrackData = !!tracks;
 
   return (
     <div className="bg-black/90">
@@ -13,7 +15,9 @@ const DisplayCard = ({ title, albums, tracks, onPlay }) => {
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
                 <img
                   alt={item.name}
-                  src={(item.album && item.album.images && item.album.images[0] && item.album.images[0].url) || 'https://via.placeholder.com/150'}
+                  src={isTrackData 
+                    ? (item.album && item.album.images && item.album.images[0] && item.album.images[0].url) || 'https://via.placeholder.com/150'
+                    : (item.images && item.images[0] && item.images[0].url) || 'https://via.placeholder.com/150'}
                   className="h-full w-full object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105"
                 />
               </div>
@@ -23,7 +27,9 @@ const DisplayCard = ({ title, albums, tracks, onPlay }) => {
                     {item.name || 'Unknown Title'}
                   </h3>
                   <p className="mt-1 text-xs text-gray-400">
-                    {item.artists && item.artists.length > 0 ? item.artists.map(artist => artist.name).join(', ') : 'Unknown Artist'}
+                    {isTrackData 
+                      ? (item.artists && item.artists.length > 0 ? item.artists.map(artist => artist.name).join(', ') : 'Unknown Artist')
+                      : (item.description || 'No Description')}
                   </p>
                 </div>
               </div>
